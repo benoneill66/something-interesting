@@ -2,49 +2,177 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Something Interesting — A Curiosity Collection</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Curious — swipe through something interesting</title>
 <style>
-  * { box-sizing:border-box; margin:0; padding:0; }
-  body { font-family:'Helvetica Neue', Arial, sans-serif; color:#1d1b16;
-    background:radial-gradient(circle at 30% 0%, #fdfaf3, #eee6d6); min-height:100vh; padding:64px 22px; }
-  header { max-width:960px; margin:0 auto 44px; text-align:center; }
-  .kicker { letter-spacing:.34em; text-transform:uppercase; font-size:12px; color:#c79a3b; font-weight:700; }
-  h1 { font-size:2.8rem; margin:.25em 0; }
-  .tag { color:#6b6453; font-size:1.05rem; }
-  .grid { max-width:960px; margin:0 auto; display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:20px; }
-  .card { display:flex; flex-direction:column; background:#fffdf8; border:1px solid #e6dcc6;
-    border-radius:14px; padding:26px 24px; text-decoration:none; color:inherit;
-    box-shadow:0 10px 28px rgba(60,45,15,.08); transition:transform .15s ease, box-shadow .15s ease; }
-  .card:hover { transform:translateY(-4px); box-shadow:0 18px 40px rgba(60,45,15,.16); }
-  .card .badge { font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:#c79a3b; font-weight:700; margin-bottom:10px; }
-  .card h2 { font-size:1.25rem; line-height:1.25; margin-bottom:8px; }
-  .card p { color:#6b6453; font-size:.92rem; line-height:1.5; flex:1; }
-  .go { margin-top:16px; color:#c79a3b; font-weight:700; font-size:.9rem; }
-  footer { max-width:960px; margin:48px auto 0; text-align:center; color:#9a9176; font-size:13px; }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; overflow:hidden; }
+  body {
+    font-family:-apple-system, "Segoe UI", Roboto, sans-serif;
+    background:#000; color:#fff;
+  }
+
+  /* The vertical snap feed */
+  #feed {
+    height:100dvh;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+    scrollbar-width:none;
+  }
+  #feed::-webkit-scrollbar { display:none; }
+
+  .slide {
+    height:100dvh;
+    scroll-snap-align:start;
+    scroll-snap-stop:always;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:0 26px 16dvh;
+    overflow:hidden;
+  }
+  /* animated gradient backdrop */
+  .slide .bg {
+    position:absolute; inset:0; z-index:0;
+    background-size:200% 200%;
+    animation:flow 12s ease infinite;
+  }
+  @keyframes flow {
+    0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
+  }
+  .slide .bg::after {
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.35) 100%);
+  }
+  /* floating soft orbs for texture */
+  .slide .orb { position:absolute; border-radius:50%; filter:blur(40px); opacity:.5; z-index:0; }
+
+  .content { position:relative; z-index:2; max-width:640px; }
+  .badge {
+    display:inline-block; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
+    font-weight:700; padding:6px 13px; border-radius:999px;
+    background:rgba(255,255,255,.16); backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.25); margin-bottom:18px;
+  }
+  .content h2 {
+    font-size:clamp(2.1rem, 8vw, 3.6rem); line-height:1.04; font-weight:800;
+    letter-spacing:-.5px; margin-bottom:16px; text-shadow:0 2px 24px rgba(0,0,0,.45);
+  }
+  .content p {
+    font-size:clamp(1rem, 4.2vw, 1.2rem); line-height:1.55; color:#e9eef3;
+    max-width:34ch; margin-bottom:26px; text-shadow:0 1px 12px rgba(0,0,0,.4);
+  }
+  .read {
+    display:inline-flex; align-items:center; gap:9px;
+    font-size:1.02rem; font-weight:700; color:#111; text-decoration:none;
+    background:#fff; padding:14px 24px; border-radius:999px;
+    box-shadow:0 10px 30px rgba(0,0,0,.35); transition:transform .15s ease;
+  }
+  .read:active { transform:scale(.96); }
+  .read .arrow { transition:transform .2s ease; }
+  .read:hover .arrow { transform:translateX(4px); }
+
+  /* swipe hint on the first slide */
+  .hint {
+    position:absolute; left:0; right:0; bottom:5dvh; z-index:2;
+    text-align:center; color:rgba(255,255,255,.85); font-size:.85rem; letter-spacing:.04em;
+    animation:bob 1.8s ease-in-out infinite; pointer-events:none;
+  }
+  .hint .chev { display:block; font-size:1.4rem; line-height:1; margin-bottom:2px; }
+  @keyframes bob { 0%,100%{transform:translateY(0); opacity:.55} 50%{transform:translateY(-7px); opacity:1} }
+
+  /* progress dots */
+  .dots { position:fixed; right:14px; top:50%; transform:translateY(-50%); z-index:10;
+    display:flex; flex-direction:column; gap:9px; }
+  .dots i { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.35); transition:all .25s ease; }
+  .dots i.on { background:#fff; height:20px; border-radius:4px; }
+
+  /* top brand */
+  .brand { position:fixed; top:env(safe-area-inset-top, 14px); left:0; right:0; z-index:10;
+    text-align:center; padding-top:14px; pointer-events:none; }
+  .brand span { font-weight:800; letter-spacing:.02em; font-size:1.05rem;
+    text-shadow:0 1px 10px rgba(0,0,0,.5); }
+  .brand small { display:block; font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
+    color:rgba(255,255,255,.7); margin-top:2px; }
 </style>
 </head>
 <body>
-  <header>
-    <div class="kicker">A Growing Collection</div>
-    <h1>Something Interesting</h1>
-    <p class="tag">Short, self-contained documents on science, history, nature, math &amp; the cosmos.</p>
-  </header>
-  <main class="grid">
-    <a class="card" href="docs/bioluminescence.html">
-      <div class="badge">Nature</div>
-      <h2>The Living Light</h2>
-      <p>How 76% of deep-sea animals make their own light — and use it to hunt, hide, and survive.</p>
-      <span class="go">Read &rarr;</span>
-    </a>
-    <a class="card" href="docs/benfords-law.html">
-      <div class="badge">Mathematics</div>
-      <h2>Benford's Law</h2>
-      <p>Why the digit 1 begins about 30% of all real-world numbers — and how it catches fraud.</p>
-      <span class="go">Read &rarr;</span>
-    </a>
-  </main>
-  <footer>Built with Claude Code · add a new card here whenever a doc is generated.</footer>
+  <div class="brand"><span>Curious</span><small>swipe to explore</small></div>
+  <div class="dots" id="dots"></div>
+  <div id="feed"></div>
+
+<script>
+/* ---- The article feed. Add an object here for every new doc. ---- */
+const ARTICLES = [
+  {
+    title: "The Living Light",
+    category: "Nature",
+    teaser: "Roughly 76% of deep-sea animals make their own light — to hunt, to hide, and to vanish.",
+    file: "docs/bioluminescence.html",
+    grad: ["#0a1f3a", "#043d3a", "#021018"],
+    orbs: ["#38f9d7", "#4facfe"]
+  },
+  {
+    title: "Benford's Law",
+    category: "Mathematics",
+    teaser: "Why the digit 1 begins about 30% of all real-world numbers — and how it catches fraud.",
+    file: "docs/benfords-law.html",
+    grad: ["#3a1c00", "#b5651d", "#1a0f00"],
+    orbs: ["#d98324", "#ffcf6b"]
+  }
+];
+
+const feed = document.getElementById('feed');
+const dots = document.getElementById('dots');
+
+ARTICLES.forEach((a, i) => {
+  const slide = document.createElement('section');
+  slide.className = 'slide';
+  const g = a.grad;
+  slide.innerHTML = `
+    <div class="bg" style="background:linear-gradient(135deg, ${g[0]}, ${g[1]}, ${g[2]})"></div>
+    <div class="orb" style="width:46vw;height:46vw;top:-8vw;right:-10vw;background:${a.orbs[0]}"></div>
+    <div class="orb" style="width:38vw;height:38vw;bottom:18vh;left:-12vw;background:${a.orbs[1]};opacity:.35"></div>
+    <div class="content">
+      <span class="badge">${a.category}</span>
+      <h2>${a.title}</h2>
+      <p>${a.teaser}</p>
+      <a class="read" href="${a.file}">Read article <span class="arrow">&rarr;</span></a>
+    </div>
+    ${i === 0 ? '<div class="hint"><span class="chev">&#8963;</span>swipe up for the next</div>' : ''}
+  `;
+  feed.appendChild(slide);
+
+  const dot = document.createElement('i');
+  if (i === 0) dot.className = 'on';
+  dots.appendChild(dot);
+});
+
+/* highlight the active dot as you scroll */
+const slides = [...feed.querySelectorAll('.slide')];
+const dotEls = [...dots.children];
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const idx = slides.indexOf(e.target);
+      dotEls.forEach((d, j) => d.classList.toggle('on', j === idx));
+    }
+  });
+}, { threshold: 0.6 });
+slides.forEach(s => io.observe(s));
+
+/* keyboard: arrows / space to move between slides */
+let current = 0;
+function go(n) {
+  current = Math.max(0, Math.min(slides.length - 1, n));
+  slides[current].scrollIntoView({ behavior: 'smooth' });
+}
+window.addEventListener('keydown', (e) => {
+  if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(current + 1); }
+  if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); go(current - 1); }
+});
+</script>
 </body>
 </html>

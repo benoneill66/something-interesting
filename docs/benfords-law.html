@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Benford's Law — The First-Digit Phenomenon</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Georgia", "Times New Roman", serif;
+    background: #f4f1ea;
+    color: #2b2b2b;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 70px 28px 90px; }
+  .kicker { font-family: -apple-system, sans-serif; text-transform: uppercase; letter-spacing: 3px; font-size: .72rem; color: #b5651d; font-weight: 700; }
+  h1 { font-size: clamp(2rem, 5.5vw, 3.2rem); line-height: 1.1; margin: 14px 0 10px; color: #1a1a1a; }
+  .sub { font-style: italic; color: #6b6b6b; font-size: 1.15rem; margin-bottom: 36px; }
+  p { margin-bottom: 18px; font-size: 1.08rem; }
+  strong { color: #b5651d; }
+  .chart {
+    background: #fff;
+    border: 1px solid #e2dccd;
+    border-radius: 12px;
+    padding: 30px 26px 22px;
+    margin: 40px 0;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+  }
+  .chart h3 { font-family: -apple-system, sans-serif; font-size: .95rem; text-align: center; margin-bottom: 24px; color: #444; }
+  .bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 11px; font-family: -apple-system, sans-serif; }
+  .digit { width: 18px; font-weight: 700; color: #1a1a1a; text-align: center; }
+  .track { flex: 1; background: #f0ece1; border-radius: 5px; height: 26px; overflow: hidden; }
+  .fill {
+    height: 100%;
+    background: linear-gradient(90deg, #d98324, #b5651d);
+    border-radius: 5px;
+    width: 0;
+    animation: grow 1.4s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  @keyframes grow { to { width: var(--w); } }
+  .pct { width: 48px; font-size: .85rem; color: #777; text-align: right; }
+  blockquote { border-left: 4px solid #d98324; padding-left: 22px; margin: 34px 0; font-style: italic; font-size: 1.2rem; color: #3a3a3a; }
+  .footer { font-family: -apple-system, sans-serif; text-align: center; margin-top: 60px; color: #a59b86; font-size: .82rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">A Mathematical Curiosity</p>
+    <h1>Benford's Law</h1>
+    <p class="sub">Why the number 1 starts far more numbers than it should.</p>
+
+    <p>Pick a big pile of real-world numbers — the lengths of rivers, the populations of cities, the dollar amounts on a year of receipts, the physical constants of the universe. Look only at the <strong>first digit</strong> of each. You might expect every digit from 1 to 9 to show up about 11% of the time. They don't.</p>
+
+    <p>Instead, the digit <strong>1</strong> appears first about <strong>30%</strong> of the time, while <strong>9</strong> shows up under 5%. This lopsided pattern is called Benford's Law, and it holds across an astonishing range of natural datasets.</p>
+
+    <div class="chart">
+      <h3>Expected frequency of each leading digit</h3>
+      <div class="bar-row"><span class="digit">1</span><div class="track"><div class="fill" style="--w:100%"></div></div><span class="pct">30.1%</span></div>
+      <div class="bar-row"><span class="digit">2</span><div class="track"><div class="fill" style="--w:58.4%"></div></div><span class="pct">17.6%</span></div>
+      <div class="bar-row"><span class="digit">3</span><div class="track"><div class="fill" style="--w:41.5%"></div></div><span class="pct">12.5%</span></div>
+      <div class="bar-row"><span class="digit">4</span><div class="track"><div class="fill" style="--w:32.2%"></div></div><span class="pct">9.7%</span></div>
+      <div class="bar-row"><span class="digit">5</span><div class="track"><div class="fill" style="--w:26.2%"></div></div><span class="pct">7.9%</span></div>
+      <div class="bar-row"><span class="digit">6</span><div class="track"><div class="fill" style="--w:22.3%"></div></div><span class="pct">6.7%</span></div>
+      <div class="bar-row"><span class="digit">7</span><div class="track"><div class="fill" style="--w:19.3%"></div></div><span class="pct">5.8%</span></div>
+      <div class="bar-row"><span class="digit">8</span><div class="track"><div class="fill" style="--w:17.0%"></div></div><span class="pct">5.1%</span></div>
+      <div class="bar-row"><span class="digit">9</span><div class="track"><div class="fill" style="--w:15.3%"></div></div><span class="pct">4.6%</span></div>
+    </div>
+
+    <p>The intuition: many real quantities grow <strong>multiplicatively</strong>, not by fixed steps. A sum of money earning interest spends much longer climbing from 1,000 to 2,000 (doubling) than from 9,000 to 10,000 (a 11% rise). So values linger in the "1-something" range far longer — and the leading digit is 1 more often.</p>
+
+    <blockquote>"Numbers don't lie — but the way they begin tells on the people who fake them."</blockquote>
+
+    <p>Because the pattern is so reliable, forensic accountants and auditors use it to <strong>catch fraud</strong>. Fabricated invoices and doctored tax figures tend to have too-evenly-spread leading digits, because humans inventing numbers don't naturally reproduce Benford's curve. The law has been admitted as evidence in court and was used to flag irregularities in financial and even election data.</p>
+
+    <div class="footer">An auto-generated curiosity · built just now</div>
+  </div>
+</body>
+</html>

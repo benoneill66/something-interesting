@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Living Light: Bioluminescence</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(ellipse at 50% 0%, #0a1f3a 0%, #020610 70%);
+    color: #d8e6f0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.7;
+  }
+  .stars::before {
+    content: "";
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 20% 30%, #4fd1c5, transparent),
+      radial-gradient(1px 1px at 70% 60%, #63b3ed, transparent),
+      radial-gradient(1.5px 1.5px at 40% 80%, #38f9d7, transparent),
+      radial-gradient(1px 1px at 85% 20%, #81e6d9, transparent),
+      radial-gradient(2px 2px at 60% 45%, #4fd1c5, transparent);
+    opacity: 0.5;
+    animation: drift 14s ease-in-out infinite alternate;
+    pointer-events: none;
+  }
+  @keyframes drift { from { transform: translateY(0); } to { transform: translateY(20px); } }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 80px 28px 100px; position: relative; }
+  h1 {
+    font-size: clamp(2.2rem, 6vw, 3.6rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-align: center;
+    background: linear-gradient(120deg, #38f9d7, #43e97b, #4facfe);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: glow 3s ease-in-out infinite alternate;
+  }
+  @keyframes glow {
+    from { filter: drop-shadow(0 0 6px rgba(67,233,123,0.3)); }
+    to   { filter: drop-shadow(0 0 22px rgba(79,209,197,0.7)); }
+  }
+  .sub { text-align: center; color: #7fa8c9; margin-top: 14px; font-style: italic; }
+  .lede { font-size: 1.2rem; margin: 48px 0 38px; color: #c3dcef; }
+  .lede span { color: #43e97b; font-weight: 700; }
+  h2 { font-size: 1.5rem; margin: 44px 0 14px; color: #81e6d9; }
+  p { margin-bottom: 16px; color: #b8cee0; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap: 16px; margin: 40px 0; }
+  .card {
+    background: rgba(56,249,215,0.06);
+    border: 1px solid rgba(56,249,215,0.18);
+    border-radius: 14px;
+    padding: 22px 18px;
+    transition: transform .3s, box-shadow .3s;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(56,249,215,0.15); }
+  .card .num { font-size: 2rem; font-weight: 800; color: #43e97b; display: block; }
+  .card .lbl { font-size: .9rem; color: #8fb3cf; margin-top: 6px; }
+  blockquote {
+    border-left: 3px solid #43e97b;
+    padding: 6px 0 6px 22px;
+    margin: 34px 0;
+    font-size: 1.15rem;
+    color: #d8e6f0;
+    font-style: italic;
+  }
+  .footer { text-align: center; margin-top: 70px; color: #5c7b96; font-size: .85rem; }
+</style>
+</head>
+<body class="stars">
+  <div class="wrap">
+    <h1>The Living Light</h1>
+    <p class="sub">How life learned to glow in the dark</p>
+
+    <p class="lede">Roughly <span>76% of ocean animals</span> can produce their own light. In the deep sea — the largest habitat on Earth — bioluminescence isn't the exception. It's the norm.</p>
+
+    <p>Bioluminescence is the production of light by a living organism through a chemical reaction. A light-emitting molecule called <strong>luciferin</strong> reacts with oxygen, helped along by an enzyme called <strong>luciferase</strong>. The result is "cold light" — nearly 100% of the energy becomes light, with almost no heat. A household incandescent bulb wastes about 90% of its energy as heat by comparison.</p>
+
+    <div class="facts">
+      <div class="card"><span class="num">~76%</span><span class="lbl">of deep-sea animals glow</span></div>
+      <div class="card"><span class="num">100%</span><span class="lbl">efficient "cold light"</span></div>
+      <div class="card"><span class="num">40+</span><span class="lbl">times evolution invented it independently</span></div>
+    </div>
+
+    <h2>Why glow at all?</h2>
+    <p>Light is precious where the sun never reaches, so animals use it with purpose. Anglerfish dangle a glowing lure to draw prey toward their jaws. Some squid emit a cloud of luminous "ink" to blind a predator and escape. The cookiecutter shark glows everywhere <em>except</em> a small dark patch — a fake silhouette that lures larger fish close enough to bite.</p>
+
+    <h2>Counter-illumination: hiding with light</h2>
+    <p>One of the cleverest tricks is to glow in order to <em>disappear</em>. Many midwater animals light up their bellies to exactly match the faint daylight filtering from above — erasing their own shadow so predators looking up see nothing at all.</p>
+
+    <blockquote>"In the deep ocean, a flash of light can be a warning, a lure, a disguise, or a love letter — and an animal must know which is which."</blockquote>
+
+    <h2>The dinoflagellate's burglar alarm</h2>
+    <p>Those glowing blue waves you may have seen at night are caused by tiny plankton called dinoflagellates. They flash when disturbed — not to help themselves directly, but to startle, and to spotlight whatever is eating their predator. It's a "burglar alarm" that summons a bigger predator to deal with the threat.</p>
+
+    <div class="footer">An auto-generated curiosity · built just now</div>
+  </div>
+</body>
+</html>

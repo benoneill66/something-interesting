@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Something Interesting — A Curiosity Collection</title>
+<style>
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Helvetica Neue', Arial, sans-serif; color:#1d1b16;
+    background:radial-gradient(circle at 30% 0%, #fdfaf3, #eee6d6); min-height:100vh; padding:64px 22px; }
+  header { max-width:960px; margin:0 auto 44px; text-align:center; }
+  .kicker { letter-spacing:.34em; text-transform:uppercase; font-size:12px; color:#c79a3b; font-weight:700; }
+  h1 { font-size:2.8rem; margin:.25em 0; }
+  .tag { color:#6b6453; font-size:1.05rem; }
+  .grid { max-width:960px; margin:0 auto; display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px,1fr)); gap:20px; }
+  .card { display:flex; flex-direction:column; background:#fffdf8; border:1px solid #e6dcc6;
+    border-radius:14px; padding:26px 24px; text-decoration:none; color:inherit;
+    box-shadow:0 10px 28px rgba(60,45,15,.08); transition:transform .15s ease, box-shadow .15s ease; }
+  .card:hover { transform:translateY(-4px); box-shadow:0 18px 40px rgba(60,45,15,.16); }
+  .card .badge { font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; color:#c79a3b; font-weight:700; margin-bottom:10px; }
+  .card h2 { font-size:1.25rem; line-height:1.25; margin-bottom:8px; }
+  .card p { color:#6b6453; font-size:.92rem; line-height:1.5; flex:1; }
+  .go { margin-top:16px; color:#c79a3b; font-weight:700; font-size:.9rem; }
+  footer { max-width:960px; margin:48px auto 0; text-align:center; color:#9a9176; font-size:13px; }
+</style>
+</head>
+<body>
+  <header>
+    <div class="kicker">A Growing Collection</div>
+    <h1>Something Interesting</h1>
+    <p class="tag">Short, self-contained documents on science, history, nature, math &amp; the cosmos.</p>
+  </header>
+  <main class="grid">
+    <a class="card" href="docs/bioluminescence.html">
+      <div class="badge">Nature</div>
+      <h2>The Living Light</h2>
+      <p>How 76% of deep-sea animals make their own light — and use it to hunt, hide, and survive.</p>
+      <span class="go">Read &rarr;</span>
+    </a>
+    <a class="card" href="docs/benfords-law.html">
+      <div class="badge">Mathematics</div>
+      <h2>Benford's Law</h2>
+      <p>Why the digit 1 begins about 30% of all real-world numbers — and how it catches fraud.</p>
+      <span class="go">Read &rarr;</span>
+    </a>
+  </main>
+  <footer>Built with Claude Code · add a new card here whenever a doc is generated.</footer>
+</body>
+</html>

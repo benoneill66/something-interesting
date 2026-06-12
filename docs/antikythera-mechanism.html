@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Antikythera Mechanism — A Computer From 2,000 Years Ago</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:"Georgia","Times New Roman",serif; line-height:1.7; color:#e8e2d4;
+    background:radial-gradient(ellipse at 50% -10%, #1c3a4a 0%, #0a1620 65%, #050b12 100%);
+    min-height:100vh;
+  }
+  .wrap { max-width:720px; margin:0 auto; padding:72px 28px 96px; }
+  .kicker { font-family:-apple-system,sans-serif; text-transform:uppercase; letter-spacing:.28em;
+    font-size:.72rem; font-weight:700; color:#5fb3c4; }
+  h1 { font-size:clamp(2rem,5.5vw,3.3rem); line-height:1.08; margin:14px 0 12px; color:#fff;
+    letter-spacing:-.5px; }
+  .sub { font-style:italic; color:#9fb3bd; font-size:1.18rem; margin-bottom:38px; }
+  p { margin-bottom:18px; font-size:1.08rem; color:#cfd9dd; }
+  strong { color:#7fd4e3; }
+  /* simple decorative gear */
+  .gear-wrap { display:flex; justify-content:center; margin:34px 0; }
+  .gear { width:130px; height:130px; animation:spin 18s linear infinite; opacity:.85; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  h2 { font-family:-apple-system,sans-serif; font-size:1.4rem; margin:42px 0 12px; color:#7fd4e3; font-weight:700; }
+  blockquote { border-left:3px solid #5fb3c4; padding-left:22px; margin:34px 0; font-size:1.22rem;
+    font-style:italic; color:#eef4f6; }
+  .facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:36px 0; }
+  .card { background:rgba(95,179,196,.08); border:1px solid rgba(95,179,196,.22); border-radius:13px;
+    padding:20px 16px; font-family:-apple-system,sans-serif; }
+  .card .n { display:block; font-size:1.8rem; font-weight:800; color:#7fd4e3; }
+  .card .l { font-size:.85rem; color:#9fb3bd; margin-top:5px; }
+  .footer { font-family:-apple-system,sans-serif; text-align:center; margin-top:64px; color:#5d7783; font-size:.82rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">Ancient History</p>
+    <h1>The Antikythera Mechanism</h1>
+    <p class="sub">A hand-cranked computer, built more than 2,000 years before the microchip.</p>
+
+    <div class="gear-wrap">
+      <svg class="gear" viewBox="0 0 100 100" fill="none" stroke="#7fd4e3" stroke-width="2">
+        <g>
+          <circle cx="50" cy="50" r="30"/>
+          <circle cx="50" cy="50" r="8"/>
+          <g stroke-linecap="round">
+            <line x1="50" y1="8" x2="50" y2="20"/><line x1="50" y1="80" x2="50" y2="92"/>
+            <line x1="8" y1="50" x2="20" y2="50"/><line x1="80" y1="50" x2="92" y2="50"/>
+            <line x1="20" y1="20" x2="29" y2="29"/><line x1="71" y1="71" x2="80" y2="80"/>
+            <line x1="80" y1="20" x2="71" y2="29"/><line x1="29" y1="71" x2="20" y2="80"/>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <p>In 1901, sponge divers off the Greek island of <strong>Antikythera</strong> surfaced from a Roman-era shipwreck with bronze statues, coins — and a crusty, corroded lump the size of a shoebox. It sat largely ignored for decades. When scientists finally peered inside with X-rays and, later, CT scans, they found something that shouldn't have existed: a dense nest of <strong>at least 30 interlocking bronze gears</strong>.</p>
+
+    <p>It was an analog computer. Turn a crank on the side, and the machine modeled the heavens.</p>
+
+    <div class="facts">
+      <div class="card"><span class="n">~150 BC</span><span class="l">when it was built</span></div>
+      <div class="card"><span class="n">30+</span><span class="l">precision bronze gears</span></div>
+      <div class="card"><span class="n">~1,400 yrs</span><span class="l">until comparable gearing reappeared</span></div>
+    </div>
+
+    <h2>What it actually did</h2>
+    <p>The Antikythera Mechanism predicted the positions of the Sun and Moon, tracked the phases of the Moon, and forecast <strong>solar and lunar eclipses</strong> decades in advance. It followed the irregular orbit of the Moon using a clever pin-and-slot gear that sped it up and slowed it down — a mechanical echo of what we now call Kepler's second law, anticipated by some 1,700 years.</p>
+
+    <p>It even kept a calendar of the <strong>Olympic Games</strong> and other Panhellenic athletic festivals, naming them on a small dial. This was as much a cultural object as an astronomical one.</p>
+
+    <blockquote>"It is more complex than any other known device from the next thousand years of human history."</blockquote>
+
+    <h2>The mystery that remains</h2>
+    <p>No other object like it survives from the ancient world. We don't know who designed it, how many were made, or what tradition of craftsmanship produced such precision — only that the knowledge to build it seems to have vanished. When the gears of the Antikythera Mechanism finally stopped, an entire technology went quiet with them, not to return until the astronomical clocks of medieval Europe.</p>
+
+    <div class="footer">An auto-generated curiosity · Curious</div>
+  </div>
+</body>
+</html>

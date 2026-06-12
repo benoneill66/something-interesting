@@ -1,6 +1,24 @@
 {
   "articles": [
     {
+      "title": "Gold From Neutron Stars",
+      "category": "Astrophysics",
+      "teaser": "Every gold atom you've touched was forged in the collision of two dead stars.",
+      "file": "docs/gold-from-neutron-stars.html"
+    },
+    {
+      "title": "The Pitch Drop Experiment",
+      "category": "Physics",
+      "teaser": "The world's slowest experiment: a drop falls once a decade, and for 90 years no one ever saw it happen.",
+      "file": "docs/pitch-drop-experiment.html"
+    },
+    {
+      "title": "The Antikythera Mechanism",
+      "category": "History",
+      "teaser": "A hand-cranked bronze computer that predicted eclipses — built 2,000 years before the microchip.",
+      "file": "docs/antikythera-mechanism.html"
+    },
+    {
       "title": "The Living Light",
       "category": "Nature",
       "teaser": "Roughly 76% of deep-sea animals make their own light — to hunt, to hide, and to vanish.",

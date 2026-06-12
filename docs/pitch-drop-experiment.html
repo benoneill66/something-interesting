@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Pitch Drop Experiment — The World's Slowest Experiment</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family:-apple-system,"Segoe UI",Roboto,sans-serif; line-height:1.7; color:#2a2620;
+    background:linear-gradient(180deg, #f4efe6 0%, #e7dcc7 100%); min-height:100vh;
+  }
+  .wrap { max-width:720px; margin:0 auto; padding:70px 28px 96px; }
+  .kicker { text-transform:uppercase; letter-spacing:.26em; font-size:.72rem; font-weight:700; color:#8a6d1f; }
+  h1 { font-family:Georgia,serif; font-size:clamp(2rem,5.5vw,3.2rem); line-height:1.1; margin:14px 0 12px; color:#1c180f; }
+  .sub { font-style:italic; color:#6f6450; font-size:1.16rem; margin-bottom:36px; }
+  p { margin-bottom:18px; font-size:1.08rem; color:#433d30; }
+  strong { color:#8a5a0f; }
+  .stage { display:flex; gap:30px; align-items:center; justify-content:center; margin:40px 0; flex-wrap:wrap; }
+  /* the dripping funnel */
+  .funnel { position:relative; width:90px; height:170px; }
+  .glass { position:absolute; inset:0; border:3px solid #6b5d44; border-bottom:none;
+    border-radius:8px 8px 0 0; clip-path:polygon(0 0,100% 0,62% 78%,62% 100%,38% 100%,38% 78%); }
+  .pitch { position:absolute; left:3px; right:3px; top:6px; bottom:0; background:#1a120a;
+    clip-path:polygon(0 0,100% 0,62% 78%,62% 100%,38% 100%,38% 78%); }
+  .drop { position:absolute; left:50%; transform:translateX(-50%); top:150px; width:13px; height:18px;
+    background:#1a120a; border-radius:50% 50% 50% 50%/60% 60% 40% 40%;
+    animation:fall 4s ease-in infinite; }
+  @keyframes fall { 0%{top:150px;opacity:0} 12%{opacity:1} 100%{top:230px;opacity:1} }
+  .beaker { width:96px; height:70px; border:3px solid #6b5d44; border-top:none; border-radius:0 0 12px 12px; position:relative; }
+  .beaker::after { content:""; position:absolute; left:3px; right:3px; bottom:0; height:34px; background:#241810; border-radius:0 0 9px 9px; }
+  h2 { font-family:Georgia,serif; font-size:1.4rem; margin:42px 0 12px; color:#6b4e12; }
+  blockquote { border-left:3px solid #b8860b; padding-left:22px; margin:32px 0; font-size:1.2rem; font-style:italic; color:#33301f; }
+  .facts { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin:36px 0; }
+  .card { background:#fffdf7; border:1px solid #ddd0b4; border-radius:13px; padding:20px 16px; box-shadow:0 6px 18px rgba(80,60,15,.07); }
+  .card .n { display:block; font-size:1.7rem; font-weight:800; color:#8a5a0f; }
+  .card .l { font-size:.85rem; color:#6f6450; margin-top:5px; }
+  .footer { text-align:center; margin-top:62px; color:#9a8f74; font-size:.82rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="kicker">Physics · Patience</p>
+    <h1>The Pitch Drop Experiment</h1>
+    <p class="sub">A demonstration so slow that most of its caretakers died before seeing a single drop fall.</p>
+
+    <div class="stage">
+      <div class="funnel">
+        <div class="pitch"></div>
+        <div class="glass"></div>
+        <div class="drop"></div>
+      </div>
+      <div class="beaker"></div>
+    </div>
+
+    <p>In <strong>1927</strong>, physicist Thomas Parnell at the University of Queensland wanted to prove a point to his students: some things that look completely solid are actually liquids — just extraordinarily, mind-bendingly slow ones.</p>
+
+    <p>He took a sample of <strong>pitch</strong> (a tar derivative so hard you can shatter it with a hammer), heated it, poured it into a sealed glass funnel, and let it settle for three years. Then, in 1930, he cut the stem open and simply… waited. The experiment has been running ever since.</p>
+
+    <div class="facts">
+      <div class="card"><span class="n">1927</span><span class="l">experiment begun</span></div>
+      <div class="card"><span class="n">~9</span><span class="l">drops in nearly a century</span></div>
+      <div class="card"><span class="n">~2 billion×</span><span class="l">thicker than water</span></div>
+    </div>
+
+    <h2>The drop no one ever saw</h2>
+    <p>A drop of pitch falls roughly once a <strong>decade</strong>. For 90 years, through eight drops, no human being ever witnessed one detach — the timing always fell during a holiday, a closed lab, or a moment someone glanced away. Professor John Mainstone tended the experiment for <strong>52 years</strong> and missed every single drop, including one in 1988 he stepped away from for just five minutes.</p>
+
+    <blockquote>"I'm hoping to be around when the next one falls — but the pitch has a way of waiting you out."</blockquote>
+
+    <p>In <strong>April 2014</strong>, a webcam finally caught a drop falling at the University of Queensland — the first ever recorded in the experiment's history. Mainstone had died the year before, still never having seen it with his own eyes. The experiment holds a Guinness World Record as the <strong>longest-running laboratory experiment</strong> on Earth, and it's expected to keep dripping for another hundred years.</p>
+
+    <div class="footer">An auto-generated curiosity · Curious</div>
+  </div>
+</body>
+</html>

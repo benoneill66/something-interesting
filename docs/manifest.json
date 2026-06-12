@@ -1,0 +1,16 @@
+{
+  "articles": [
+    {
+      "title": "The Living Light",
+      "category": "Nature",
+      "teaser": "Roughly 76% of deep-sea animals make their own light — to hunt, to hide, and to vanish.",
+      "file": "docs/bioluminescence.html"
+    },
+    {
+      "title": "Benford's Law",
+      "category": "Mathematics",
+      "teaser": "Why the digit 1 begins about 30% of all real-world numbers — and how it catches fraud.",
+      "file": "docs/benfords-law.html"
+    }
+  ]
+}

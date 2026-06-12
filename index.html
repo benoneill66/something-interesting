@@ -3,176 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Curious — swipe through something interesting</title>
+<title>Curious — endless interesting things</title>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   html, body { height:100%; overflow:hidden; }
-  body {
-    font-family:-apple-system, "Segoe UI", Roboto, sans-serif;
-    background:#000; color:#fff;
-  }
+  body { font-family:-apple-system,"Segoe UI",Roboto,sans-serif; background:#000; color:#fff; }
 
-  /* The vertical snap feed */
   #feed {
-    height:100dvh;
-    overflow-y:scroll;
-    scroll-snap-type:y mandatory;
-    scroll-behavior:smooth;
-    scrollbar-width:none;
+    height:100dvh; overflow-y:scroll;
+    scroll-snap-type:y mandatory; scroll-behavior:smooth; scrollbar-width:none;
   }
   #feed::-webkit-scrollbar { display:none; }
 
   .slide {
-    height:100dvh;
-    scroll-snap-align:start;
-    scroll-snap-stop:always;
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    justify-content:flex-end;
-    padding:0 26px 16dvh;
-    overflow:hidden;
+    height:100dvh; scroll-snap-align:start; scroll-snap-stop:always;
+    position:relative; display:flex; flex-direction:column; justify-content:flex-end;
+    padding:0 26px 16dvh; overflow:hidden;
   }
-  /* animated gradient backdrop */
   .slide .bg {
-    position:absolute; inset:0; z-index:0;
-    background-size:200% 200%;
-    animation:flow 12s ease infinite;
+    position:absolute; inset:0; z-index:0; background-size:200% 200%;
+    animation:flow 14s ease infinite, kb 20s ease-in-out infinite alternate;
   }
-  @keyframes flow {
-    0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%}
-  }
+  @keyframes flow { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+  @keyframes kb { from{transform:scale(1)} to{transform:scale(1.12)} }
   .slide .bg::after {
     content:""; position:absolute; inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.35) 100%);
+    background:linear-gradient(to top, rgba(0,0,0,.8) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.4) 100%);
   }
-  /* floating soft orbs for texture */
-  .slide .orb { position:absolute; border-radius:50%; filter:blur(40px); opacity:.5; z-index:0; }
+  .slide .orb { position:absolute; border-radius:50%; filter:blur(44px); opacity:.5; z-index:0; }
 
-  .content { position:relative; z-index:2; max-width:640px; }
+  .content { position:relative; z-index:2; max-width:640px; animation:rise .6s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes rise { from{opacity:0; transform:translateY(26px)} to{opacity:1; transform:translateY(0)} }
   .badge {
-    display:inline-block; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase;
-    font-weight:700; padding:6px 13px; border-radius:999px;
-    background:rgba(255,255,255,.16); backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.25); margin-bottom:18px;
+    display:inline-block; font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; font-weight:700;
+    padding:6px 13px; border-radius:999px; background:rgba(255,255,255,.16);
+    backdrop-filter:blur(6px); border:1px solid rgba(255,255,255,.25); margin-bottom:18px;
   }
   .content h2 {
-    font-size:clamp(2.1rem, 8vw, 3.6rem); line-height:1.04; font-weight:800;
-    letter-spacing:-.5px; margin-bottom:16px; text-shadow:0 2px 24px rgba(0,0,0,.45);
+    font-size:clamp(2.1rem,8vw,3.7rem); line-height:1.04; font-weight:800; letter-spacing:-.5px;
+    margin-bottom:16px; text-shadow:0 2px 24px rgba(0,0,0,.5);
   }
   .content p {
-    font-size:clamp(1rem, 4.2vw, 1.2rem); line-height:1.55; color:#e9eef3;
-    max-width:34ch; margin-bottom:26px; text-shadow:0 1px 12px rgba(0,0,0,.4);
+    font-size:clamp(1rem,4.2vw,1.2rem); line-height:1.55; color:#e9eef3; max-width:34ch;
+    margin-bottom:26px; text-shadow:0 1px 12px rgba(0,0,0,.45);
   }
   .read {
-    display:inline-flex; align-items:center; gap:9px;
-    font-size:1.02rem; font-weight:700; color:#111; text-decoration:none;
-    background:#fff; padding:14px 24px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:9px; font-size:1.02rem; font-weight:700;
+    color:#111; text-decoration:none; background:#fff; padding:14px 24px; border-radius:999px;
     box-shadow:0 10px 30px rgba(0,0,0,.35); transition:transform .15s ease;
   }
   .read:active { transform:scale(.96); }
   .read .arrow { transition:transform .2s ease; }
   .read:hover .arrow { transform:translateX(4px); }
 
-  /* swipe hint on the first slide */
+  /* Reels-style right action rail */
+  .rail { position:absolute; right:16px; bottom:17dvh; z-index:3; display:flex; flex-direction:column; gap:20px; align-items:center; }
+  .rail button { -webkit-appearance:none; appearance:none; border:none; cursor:pointer;
+    width:46px; height:46px; border-radius:50%; background:rgba(255,255,255,.14);
+    backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.22);
+    color:#fff; font-size:1.35rem; display:flex; align-items:center; justify-content:center;
+    transition:transform .15s ease, background .15s ease; }
+  .rail button:active { transform:scale(.88); }
+  .rail button:hover { background:rgba(255,255,255,.26); }
+  .rail span { font-size:.66rem; color:rgba(255,255,255,.85); margin-top:-14px; }
+
   .hint {
-    position:absolute; left:0; right:0; bottom:5dvh; z-index:2;
-    text-align:center; color:rgba(255,255,255,.85); font-size:.85rem; letter-spacing:.04em;
+    position:absolute; left:0; right:0; bottom:5dvh; z-index:2; text-align:center;
+    color:rgba(255,255,255,.85); font-size:.85rem; letter-spacing:.04em;
     animation:bob 1.8s ease-in-out infinite; pointer-events:none;
   }
   .hint .chev { display:block; font-size:1.4rem; line-height:1; margin-bottom:2px; }
   @keyframes bob { 0%,100%{transform:translateY(0); opacity:.55} 50%{transform:translateY(-7px); opacity:1} }
 
-  /* progress dots */
-  .dots { position:fixed; right:14px; top:50%; transform:translateY(-50%); z-index:10;
-    display:flex; flex-direction:column; gap:9px; }
-  .dots i { width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.35); transition:all .25s ease; }
-  .dots i.on { background:#fff; height:20px; border-radius:4px; }
-
-  /* top brand */
-  .brand { position:fixed; top:env(safe-area-inset-top, 14px); left:0; right:0; z-index:10;
+  .brand { position:fixed; top:env(safe-area-inset-top,14px); left:0; right:0; z-index:10;
     text-align:center; padding-top:14px; pointer-events:none; }
-  .brand span { font-weight:800; letter-spacing:.02em; font-size:1.05rem;
-    text-shadow:0 1px 10px rgba(0,0,0,.5); }
-  .brand small { display:block; font-size:.68rem; letter-spacing:.22em; text-transform:uppercase;
+  .brand span { font-weight:800; font-size:1.05rem; text-shadow:0 1px 10px rgba(0,0,0,.6); }
+  .brand small { display:block; font-size:.66rem; letter-spacing:.22em; text-transform:uppercase;
     color:rgba(255,255,255,.7); margin-top:2px; }
+
+  .msg { position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:30px; color:#9fb0c0; font-size:1rem; line-height:1.6; }
+  .msg code { color:#cfe; background:rgba(255,255,255,.08); padding:2px 7px; border-radius:6px; }
 </style>
 </head>
 <body>
-  <div class="brand"><span>Curious</span><small>swipe to explore</small></div>
-  <div class="dots" id="dots"></div>
+  <div class="brand"><span>Curious</span><small>keep swiping</small></div>
   <div id="feed"></div>
+  <div class="msg" id="msg">Loading…</div>
 
 <script>
-/* ---- The article feed. Add an object here for every new doc. ---- */
-const ARTICLES = [
-  {
-    title: "The Living Light",
-    category: "Nature",
-    teaser: "Roughly 76% of deep-sea animals make their own light — to hunt, to hide, and to vanish.",
-    file: "docs/bioluminescence.html",
-    grad: ["#0a1f3a", "#043d3a", "#021018"],
-    orbs: ["#38f9d7", "#4facfe"]
-  },
-  {
-    title: "Benford's Law",
-    category: "Mathematics",
-    teaser: "Why the digit 1 begins about 30% of all real-world numbers — and how it catches fraud.",
-    file: "docs/benfords-law.html",
-    grad: ["#3a1c00", "#b5651d", "#1a0f00"],
-    orbs: ["#d98324", "#ffcf6b"]
-  }
+const MANIFEST = "docs/manifest.json";
+
+/* Auto-styling: a stable, good-looking theme derived from each title. */
+const THEMES = [
+  { grad:["#0a1f3a","#043d3a","#021018"], orbs:["#38f9d7","#4facfe"] },
+  { grad:["#3a1c00","#b5651d","#1a0f00"], orbs:["#d98324","#ffcf6b"] },
+  { grad:["#1a0033","#4a0e63","#0d0019"], orbs:["#c471ed","#f64f59"] },
+  { grad:["#001f1f","#005c4b","#001410"], orbs:["#43e97b","#38f9d7"] },
+  { grad:["#2b0a3d","#8e2de2","#150522"], orbs:["#e96443","#904e95"] },
+  { grad:["#001233","#0353a4","#000a1a"], orbs:["#4facfe","#00f2fe"] },
+  { grad:["#3d0000","#a30000","#1a0000"], orbs:["#ff512f","#dd2476"] },
+  { grad:["#0d1b0d","#2d6a4f","#04110a"], orbs:["#95d5b2","#52b788"] },
+  { grad:["#1b1035","#3a2d7d","#0a0618"], orbs:["#7f7fd5","#86a8e7"] },
+  { grad:["#2d0a14","#9d174d","#14040a"], orbs:["#f857a6","#ff5858"] }
 ];
+function hash(s){ let h=0; for(let i=0;i<s.length;i++){ h=(h<<5)-h+s.charCodeAt(i); h|=0; } return Math.abs(h); }
+function themeFor(a){ return a.theme || THEMES[hash(a.title) % THEMES.length]; }
+
+function shuffle(arr){ const a=[...arr]; for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
 const feed = document.getElementById('feed');
-const dots = document.getElementById('dots');
+const msg  = document.getElementById('msg');
+let POOL = [];
 
-ARTICLES.forEach((a, i) => {
+function addSlide(a, withHint){
+  const t = themeFor(a);
   const slide = document.createElement('section');
   slide.className = 'slide';
-  const g = a.grad;
+  slide.dataset.file = a.file;
   slide.innerHTML = `
-    <div class="bg" style="background:linear-gradient(135deg, ${g[0]}, ${g[1]}, ${g[2]})"></div>
-    <div class="orb" style="width:46vw;height:46vw;top:-8vw;right:-10vw;background:${a.orbs[0]}"></div>
-    <div class="orb" style="width:38vw;height:38vw;bottom:18vh;left:-12vw;background:${a.orbs[1]};opacity:.35"></div>
+    <div class="bg" style="background:linear-gradient(135deg, ${t.grad[0]}, ${t.grad[1]}, ${t.grad[2]})"></div>
+    <div class="orb" style="width:46vw;height:46vw;top:-8vw;right:-10vw;background:${t.orbs[0]}"></div>
+    <div class="orb" style="width:38vw;height:38vw;bottom:18vh;left:-12vw;background:${t.orbs[1]};opacity:.35"></div>
     <div class="content">
-      <span class="badge">${a.category}</span>
+      <span class="badge">${a.category||'Curiosity'}</span>
       <h2>${a.title}</h2>
-      <p>${a.teaser}</p>
+      <p>${a.teaser||''}</p>
       <a class="read" href="${a.file}">Read article <span class="arrow">&rarr;</span></a>
     </div>
-    ${i === 0 ? '<div class="hint"><span class="chev">&#8963;</span>swipe up for the next</div>' : ''}
+    <div class="rail">
+      <button class="shuffle" title="Shuffle">&#x21bb;</button>
+    </div>
+    ${withHint ? '<div class="hint"><span class="chev">&#8963;</span>swipe up for more</div>' : ''}
   `;
   feed.appendChild(slide);
-
-  const dot = document.createElement('i');
-  if (i === 0) dot.className = 'on';
-  dots.appendChild(dot);
-});
-
-/* highlight the active dot as you scroll */
-const slides = [...feed.querySelectorAll('.slide')];
-const dotEls = [...dots.children];
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const idx = slides.indexOf(e.target);
-      dotEls.forEach((d, j) => d.classList.toggle('on', j === idx));
-    }
-  });
-}, { threshold: 0.6 });
-slides.forEach(s => io.observe(s));
-
-/* keyboard: arrows / space to move between slides */
-let current = 0;
-function go(n) {
-  current = Math.max(0, Math.min(slides.length - 1, n));
-  slides[current].scrollIntoView({ behavior: 'smooth' });
 }
-window.addEventListener('keydown', (e) => {
-  if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); go(current + 1); }
-  if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); go(current - 1); }
+
+/* Append a fresh shuffled batch — never starting with the same article that's
+   currently at the bottom, so it feels like an endless, varied stream. */
+function appendBatch(){
+  if(!POOL.length) return;
+  let batch = shuffle(POOL);
+  const lastFile = feed.lastElementChild && feed.lastElementChild.dataset.file;
+  if(batch.length>1 && batch[0].file===lastFile){ batch.push(batch.shift()); }
+  batch.forEach((a,i)=> addSlide(a, false));
+}
+
+/* When you get within 2 slides of the end, queue up another batch → infinite. */
+let tail;
+function watchTail(){
+  if(tail) tail.disconnect();
+  const slides = [...feed.querySelectorAll('.slide')];
+  const trigger = slides[Math.max(0, slides.length-3)];
+  if(!trigger) return;
+  tail = new IntersectionObserver((entries)=>{
+    if(entries.some(e=>e.isIntersecting)){ appendBatch(); watchTail(); }
+  }, { root:feed, threshold:0.4 });
+  tail.observe(trigger);
+}
+
+function start(articles){
+  POOL = articles;
+  feed.innerHTML='';
+  feed.scrollTop=0;
+  const first = shuffle(POOL);
+  first.forEach((a,i)=> addSlide(a, i===0));
+  appendBatch();          // pre-load a second batch so the loop never runs dry
+  watchTail();
+}
+
+/* shuffle button (event-delegated) */
+feed.addEventListener('click', (e)=>{
+  if(e.target.closest('.shuffle')){ start(POOL); }
 });
+
+/* keyboard nav */
+let current=0;
+window.addEventListener('keydown',(e)=>{
+  const slides=[...feed.querySelectorAll('.slide')];
+  if(['ArrowDown','PageDown',' '].includes(e.key)){ e.preventDefault(); current=Math.min(slides.length-1,current+1); slides[current].scrollIntoView({behavior:'smooth'}); }
+  if(['ArrowUp','PageUp'].includes(e.key)){ e.preventDefault(); current=Math.max(0,current-1); slides[current].scrollIntoView({behavior:'smooth'}); }
+});
+
+fetch(MANIFEST, { cache:"no-store" })
+  .then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); })
+  .then(data=>{
+    const arts = (data.articles||[]).filter(a=>a && a.title && a.file);
+    if(!arts.length){ msg.textContent="No articles yet — add some to docs/manifest.json."; return; }
+    msg.style.display='none';
+    start(arts);
+  })
+  .catch(err=>{
+    msg.innerHTML = "Couldn't load the feed.<br><br>If you opened this file directly, browsers block <code>fetch</code> over <code>file://</code>.<br>Run <code>python3 -m http.server</code> in this folder, or view it live on GitHub Pages.";
+  });
 </script>
 </body>
 </html>
